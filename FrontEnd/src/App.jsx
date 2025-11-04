@@ -11,19 +11,28 @@ import About from "./About";
 import Dashboard from "./Dashboard";
 import SignupPage from "./SignUp";
 
-// ✅ Layout Wrapper to handle conditional rendering
-function Layout({ children }) {
+// ✅ Wrapper component to access location
+function AppWrapper() {
   const location = useLocation();
 
   // Paths where we DON'T want Header/Footer
-  const hideLayoutPaths = ["/login", "/dashboard","/signup"];
+  const hideHeaderFooter = ["/login", "/dashboard", "/signup"];
 
-  const hideLayout = hideLayoutPaths.includes(location.pathname);
+  const hideLayout = hideHeaderFooter.includes(location.pathname);
 
   return (
     <>
       {!hideLayout && <Header />}
-      {children}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<SearchPage />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
       {!hideLayout && <Footer />}
     </>
   );
@@ -31,21 +40,8 @@ function Layout({ children }) {
 
 export default function App() {
   return (
-    <div className="App">
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<SearchPage />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </div>
+    <Router>
+      <AppWrapper />
+    </Router>
   );
 }

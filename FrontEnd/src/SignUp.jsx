@@ -3,7 +3,7 @@ import { sanitizeInput } from "./utils/sanitizeInput";
 import { isAlphabetOnly } from "./utils/isAlphabetOnly";
 import { charLength } from "./utils/charLength";
 import { regEmailTest } from "./utils/regEmailTest";
-
+import { useNavigate } from "react-router-dom";
 export default function SignupPage() {
   // Error states
   const [errorOverallState, setErrorOverallState] = useState("");
@@ -57,7 +57,7 @@ const savingData = async (regEmail, regName, password) => {
       }
 
       alert("Registered successfully! Redirecting to Dashboard...");
-      window.location.replace("/dashboard/");
+      window.location.href = "/dashboard";
     } else {
       alert(resJSON_Data.message || "Registration failed");
     }

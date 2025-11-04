@@ -42,12 +42,7 @@ function Header() {
         >
           Contact Us
         </Link>
-          <Link
-          to="/dashboard"
-          className="text-gray-700 font-medium text-lg px-3 py-2 rounded-full hover:bg-[#FF385C]/10 hover:text-[#FF385C] transition"
-        >
-         Dashboard
-        </Link>
+        
       </nav>
 
       {/* Right Side */}

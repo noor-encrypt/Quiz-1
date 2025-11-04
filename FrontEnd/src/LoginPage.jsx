@@ -13,7 +13,7 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+            className="w-full px-4 py-3 bg-gray-50 border order-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
           />
           <input
             type="password"

@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Home,
   BedDouble,
   ClipboardList,
-  Settings,
   User,
   Info,
   Phone,
@@ -12,6 +11,44 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
+  const [userEmail, setuserEmail] = useState("");
+  const [userName, setuserName] = useState("");
+ 
+  const getDataFromApi = async(token)=>{
+    let myEndpoint = "http://localhost:5000/user/get-profile/";
+      let dataFetched = await fetch(myEndpoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      //console.log("received Data: ", dataFetched);
+      let parsedData = await dataFetched.json(); /* Must wait for myData.json */
+      //console.log("parsed received Data: ", parsedData);
+      if (parsedData.message !== "OK") {
+        window.location.replace("/register/");
+      }
+      setuserEmail(parsedData.userData.regEmail);
+      setuserName(parsedData.userData.regName);
+  }
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    //console.log("token from browser: ", token)
+    if (!token) {
+      alert("Please register or login first!");
+      window.location.replace("/login/");
+    }else{
+      //console.log("token exists...");
+      getDataFromApi(token);
+    }
+  }, []);
+ 
+  // Logout function
+  const handleLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem("userToken");
+ 
+    // Redirect to login/register page and reload (fresh page)
+    window.location.replace("/login"); // or "/login"
+  };
+ 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       {/* Top Navbar */}
@@ -19,7 +56,10 @@ export default function Dashboard() {
         <h1 className="text-2xl font-semibold text-[#FF385C] tracking-tight">
           Airbnb Dashboard
         </h1>
-        <button className="flex items-center gap-2 bg-[#FF385C] text-white px-4 py-2 rounded-full hover:bg-[#e0314f] transition">
+        <button
+          className="flex items-center gap-2 bg-[#FF385C] text-white px-4 py-2 rounded-full hover:bg-[#e0314f] transition"
+          onClick={handleLogout}
+        >
           <LogOut size={18} /> Logout
         </button>
       </header>
@@ -27,7 +67,8 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="flex-grow flex flex-col items-center mt-10">
         <h2 className="text-3xl font-semibold text-gray-800 mb-12">
-          Welcome back, <span className="text-[#FF385C]">User!</span>
+          Welcome back,{" "}
+          <span className="text-[#FF385C]">{userName || "User"}</span>
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-11/12 max-w-6xl">
@@ -36,7 +77,10 @@ export default function Dashboard() {
             <Home className="mx-auto text-[#FF385C]" size={42} />
             <h3 className="text-xl font-semibold mt-4">Home</h3>
             <p className="text-gray-500 mt-2 mb-4">Go to the main homepage.</p>
-            <Link to="/" className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition">
+            <Link
+              to="/"
+              className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition"
+            >
               Visit
             </Link>
           </div>
@@ -46,7 +90,10 @@ export default function Dashboard() {
             <BedDouble className="mx-auto text-[#FF385C]" size={42} />
             <h3 className="text-xl font-semibold mt-4">Our Services</h3>
             <p className="text-gray-500 mt-2 mb-4">Explore all booking services.</p>
-            <Link to="/services" className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition">
+            <Link
+              to="/services"
+              className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition"
+            >
               View
             </Link>
           </div>
@@ -66,7 +113,10 @@ export default function Dashboard() {
             <Info className="mx-auto text-[#FF385C]" size={42} />
             <h3 className="text-xl font-semibold mt-4">About Us</h3>
             <p className="text-gray-500 mt-2 mb-4">Learn about this platform.</p>
-            <Link to="/about" className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition">
+            <Link
+              to="/about"
+              className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition"
+            >
               Learn
             </Link>
           </div>
@@ -76,7 +126,10 @@ export default function Dashboard() {
             <Phone className="mx-auto text-[#FF385C]" size={42} />
             <h3 className="text-xl font-semibold mt-4">Contact Us</h3>
             <p className="text-gray-500 mt-2 mb-4">Reach out for help or feedback.</p>
-            <Link to="/contact" className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition">
+            <Link
+              to="/contact"
+              className="bg-[#FF385C] text-white px-5 py-2 rounded-full hover:bg-[#e0314f] transition"
+            >
               Contact
             </Link>
           </div>
