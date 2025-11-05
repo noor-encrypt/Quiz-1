@@ -5,6 +5,7 @@ import register_user from "./myFiles/register-user.js"
 import get_profile from "./myFiles/get-profile.js"
 //running above required-code
 connectToMongo()
+import loginUser from "./myFiles/login-user.js";
 
 import express from "express"
 
@@ -24,7 +25,7 @@ app.use('/user', all_user)//displaying all user
 //route for register-user
 app.use('/user/register-user', register_user)
 app.use('/user/get-profile', get_profile)
-
+app.use("/user/login-user", loginUser)
 const port = 5000
 
 app.listen(port)

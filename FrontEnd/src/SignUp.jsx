@@ -48,16 +48,9 @@ const savingData = async (regEmail, regName, password) => {
     console.log("Backend response:", resJSON_Data); // <-- debug line
 
     if (resJSON_Data.resStatus === "true") {
-      // ✅ Store token
-      if (resJSON_Data.token) {
-        localStorage.setItem("userToken", resJSON_Data.token);
-        console.log("Token stored in localStorage:", localStorage.getItem("userToken")); // <-- debug line
-      } else {
-        console.warn("No token received from backend!");
-      }
-
-      alert("Registered successfully! Redirecting to Dashboard...");
-      window.location.href = "/dashboard";
+  
+      alert("Registered successfully! Redirecting to Login...");
+      window.location.href = "/login";
     } else {
       alert(resJSON_Data.message || "Registration failed");
     }
