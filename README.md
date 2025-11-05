@@ -23,6 +23,14 @@ A React-based Airbnb clone dashboard with user authentication, bookings, service
 - JWT (Authentication)
 
 ---
+# Services Page Images
+
+- Chef Services - ./public/images/chef services.jpg
+- Electrician Services - ./public/images/electrician services.jpg
+- Grocery - ./public/images/grocery.jpg
+- Pet - ./public/images/pet.jpg
+- Photography - ./public/images/photography.jpg
+- Sweeping - ./public/images/sweeping.jpg
 
 ## Installation
 
