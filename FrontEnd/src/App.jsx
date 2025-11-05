@@ -10,6 +10,8 @@ import LoginPage from "./LoginPage";
 import About from "./About";
 import Dashboard from "./Dashboard";
 import SignupPage from "./SignUp";
+import ServiceDetail from "./DetailedServices"; // adjust path if needed
+
 
 // ✅ Wrapper component to access location
 function AppWrapper() {
@@ -31,6 +33,7 @@ function AppWrapper() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/services/:id" element={<ServiceDetail />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       {!hideLayout && <Footer />}
