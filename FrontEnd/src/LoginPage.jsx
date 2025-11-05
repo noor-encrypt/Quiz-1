@@ -40,7 +40,7 @@ const handleLogin = async (e) => {
     console.log("Parsed login response:", data);
 
     if (response.ok && data.token) {
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("userToken", data.token);
       alert("Login successful!");
       navigate("/dashboard");
     } else {

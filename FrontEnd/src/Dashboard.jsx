@@ -14,20 +14,34 @@ export default function Dashboard() {
   const [userEmail, setuserEmail] = useState("");
   const [userName, setuserName] = useState("");
  
-  const getDataFromApi = async(token)=>{
-    let myEndpoint = "http://localhost:5000/user/get-profile/";
-      let dataFetched = await fetch(myEndpoint, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      //console.log("received Data: ", dataFetched);
-      let parsedData = await dataFetched.json(); /* Must wait for myData.json */
-      //console.log("parsed received Data: ", parsedData);
-      if (parsedData.message !== "OK") {
-        window.location.replace("/register/");
-      }
-      setuserEmail(parsedData.userData.regEmail);
-      setuserName(parsedData.userData.regName);
+const getDataFromApi = async (token) => {
+  try {
+    const myEndpoint = "http://localhost:5000/user/get-profile/";
+    const response = await fetch(myEndpoint, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const parsedData = await response.json();
+    // console.log("parsed received Data:", parsedData);
+
+    if (parsedData.message !== "OK" || !parsedData.userData) {
+      alert("Session expired or invalid token.");
+      localStorage.removeItem("userToken");
+      window.location.replace("/login");
+      return;
+    }
+
+    setuserEmail(parsedData.userData.regEmail);
+    setuserName(parsedData.userData.regName);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    alert("Error fetching user data. Please login again.");
+    localStorage.removeItem("userToken");
+    window.location.replace("/login");
   }
+};
+
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     //console.log("token from browser: ", token)
